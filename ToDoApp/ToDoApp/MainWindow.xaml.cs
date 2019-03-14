@@ -146,8 +146,10 @@ namespace ToDoApp
                 gridLogin.Visibility = Visibility.Hidden;
                 textUsername.Text = dr["naam"].ToString();
 
-                DataTable todoData = TDC.laadData(1);
-                dgToDo.DataContext = todoData;
+                DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDo.DataContext = todoData.DefaultView;
+
+                
             }
             else
             {
@@ -155,16 +157,40 @@ namespace ToDoApp
             }
         }
 
-        private void btOpslaan_Click(object sender, RoutedEventArgs e)
+        private void BtOpslaan_Click(object sender, RoutedEventArgs e)
         {
-            if (userData.Rows.Count != 0)
+            if (userData != null)
             {
                 DataRow dr = userData.Rows[0];
 
-                db.ExecuteStringQuery($"INSERT INTO `tododb`.`to-do taak` (`Omschrijving`, `Datum`, `GebruikerID`, `Voltooid`) VALUES ('{tbTaakOmschrijving.Text}', '{tbDatum.Text}', '1', b'0');");
+                string userID = dr["ID"].ToString();
+
+                db.ExecuteStringQuery($"INSERT INTO `tododb`.`to-do taak` (`Omschrijving`, `Datum`, `GebruikerID`, `Voltooid`) VALUES ('{tbTaakOmschrijving.Text}', '{tbDatum.Text}', '{userID}', b'0');");
+
+                dgToDo.Items.Clear();
+
+                DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDo.DataContext = todoData.DefaultView;
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
             }
 
             
+        }
+
+        private void BtAnnuleren_Click(object sender, RoutedEventArgs e)
+        {
+            gdTaakToevoegen.Visibility = Visibility.Hidden;
+            dgToDo.Visibility = Visibility.Visible;
+
+        }
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            gdTaakToevoegen.Visibility = Visibility.Visible;
+            dgToDo.Visibility = Visibility.Hidden;
         }
     }
 }

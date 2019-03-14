@@ -13,7 +13,7 @@ namespace ToDoApp.Classes
 
         public DataTable laadData(int gebruikersID)
         {
-            DataTable dt = db.ExecuteStringQuery("SELECT * FROM gebruiker");
+            DataTable dt = db.ExecuteStringQuery($"SELECT * FROM `to-do taak` WHERE GebruikerID = '{gebruikersID}';");
 
             return dt;
         }
