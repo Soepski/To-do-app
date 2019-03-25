@@ -73,6 +73,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40*"/>
                 <ColumnDefinition Width="150*"/>
+                <ColumnDefinition Width="40*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
@@ -87,10 +88,10 @@
                 <RowDefinition Height="10*"/>
                 <RowDefinition Height="100*"/>
             </Grid.RowDefinitions>
-
+            <Image Name="imgPointer" Grid.Row="2" Grid.Column="2" Source="Images/pointer.png"/>
             <!--USERNAME-->
             <Image Name="imgLogin" Grid.Row="0" Grid.Column="0" Source="Images/default user pic.jpg" MouseDown="ImgLogin_MouseDown"/>
-            <Viewbox  Name="tbLogin" Grid.Row="0" Grid.Column="2" Margin="5,5,5,5" HorizontalAlignment="Left" MouseDown="TbLogin_MouseDown">
+            <Viewbox  Name="tbLogin" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" HorizontalAlignment="Left" MouseDown="TbLogin_MouseDown">
                 <TextBlock  Name="textUsername" Text="Log in"/>
             </Viewbox>
             <!--TO DO -->
@@ -158,22 +159,104 @@
                     <Viewbox Grid.Column="0" Grid.Row="2">
                         <Label Content="Datum:"/>
                     </Viewbox>
-                    <TextBox Name="tbDatum" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,0,10,0"/>
                     <TextBox Name="tbTaakOmschrijving" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,10,10"/>
+                    <TextBox Name="tbDatum" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,0,10,0"/>
                     <Button Name="btOpslaan" Content="Opslaan" Grid.Column="1" Grid.Row="4" Margin="0,0,5,0" Click="BtOpslaan_Click"/>
-                    <Button Name="btAnnuleren" Content="Annuleer" Grid.Column="2" Grid.Row="4" Margin="5,0,0,0" Click="BtAnnuleren_Click"/>
+                    <Button Name="btAnnuleren" Content="Ga terug" Grid.Column="2" Grid.Row="4" Margin="5,0,0,0" Click="BtAnnuleren_Click"/>
                 </Grid>
                 <DataGrid Visibility="Visible" Name="dgToDo" Margin="0,0,10,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" ItemsSource="{Binding}"/>
                 <Image Name="btTaakToevoegen" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Source="Images/add-1-icon--flatastic-1-iconset--custom-icon-design-0.png" MouseDown="btTaakToevoegen_MouseDown"/>
                 <Image Name="btTaakVerwijderen" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Source="Images/delete icon.png" MouseDown="BtTaakVerwijderen_MouseDown"/>
+                <Image Name="btVoltooien" Grid.Column="0" Grid.Row="2"  Source="Images/sign-check-icon.png" MouseDown="btVoltooien_MouseDown"/>
             </Grid>
             <!--GRID SCHOOL-->
-            <Grid Name="gridSchool"  Grid.Column="0" Grid.Row="2" Visibility="Hidden">
-                <TextBlock Name="SCHOOL" Text="SCHOOL"/>
+            <Grid Name="gridSchool"  Grid.Column="0" Grid.Row="2" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="200*"/>
+                </Grid.ColumnDefinitions>
+                <!-- GRID TAAK AANMAKEN -->
+                <Grid Visibility="Collapsed" Grid.Column="1" Grid.RowSpan="5" Name="gdTaakToevoegenSchool">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Column="0" Grid.Row="0">
+                        <Label Content="Omschrijving:"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="2">
+                        <Label Content="Vak:" Margin="0,20,0,20"/>
+                    </Viewbox>
+                    <Viewbox Grid.Column="0" Grid.Row="4">
+                        <Label Content="Datum:"/>
+                    </Viewbox>
+                    <TextBox Name="tbTaakOmschrijvingSchool" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,10,10"/>
+                    <TextBox Name="tbVak" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0,0,10,10"/>
+                    <TextBox Name="tbDatumSchool" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" Margin="0,0,10,0"/>
+                    <Button Name="btOpslaanSchool" Content="Opslaan" Grid.Column="1" Grid.Row="6" Margin="0,0,5,0" Click="btOpslaanSchool_Click"/>
+                    <Button Name="btAnnulerenSchool" Content="Ga terug" Grid.Column="2" Grid.Row="6" Margin="5,0,0,0" Click="btAnnulerenSchool_Click"/>
+                </Grid>
+                <DataGrid Visibility="Visible" Name="dgToDoSchool" Margin="0,0,10,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" ItemsSource="{Binding}"/>
+                <Image Name="btTaakToevoegenSchool" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Source="Images/add-1-icon--flatastic-1-iconset--custom-icon-design-0.png" MouseDown="btTaakToevoegenSchool_MouseDown"/>
+                <Image Name="btTaakVerwijderenSchool" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Source="Images/delete icon.png" MouseDown="btTaakVerwijderenSchool_MouseDown"/>
+                <Image Name="btVoltooienSchool" Grid.Column="0" Grid.Row="2"  Source="Images/sign-check-icon.png" MouseDown="btVoltooienSchool_MouseDown"/>
             </Grid>
             <!--GRID NOTITIES-->
-            <Grid Name="gridNotities"  Grid.Column="0" Grid.Row="2" Visibility="Hidden">
-                <TextBlock Name="NOTITIES" Text="NOTITIES"/>
+            <Grid Name="gridNotities"  Grid.Column="0" Grid.Row="2" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="25*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*"/>
+                    <ColumnDefinition Width="200*"/>
+                </Grid.ColumnDefinitions>
+                <!-- GRID TAAK AANMAKEN -->
+                <Grid Visibility="Collapsed" Grid.Column="1" Grid.RowSpan="5" Name="gdTaakToevoegenNotitie">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="10*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Column="0" Grid.Row="0">
+                        <Label Content="Omschrijving:"/>
+                    </Viewbox>
+                    <TextBox Name="tbTaakOmschrijvingNotitie" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,10,10"/>
+                    <Button Name="btOpslaanNotitie" Content="Opslaan" Grid.Column="1" Grid.Row="2" Margin="0,0,5,0" Click="btOpslaanNotitie_Click"/>
+                    <Button Name="btAnnulerenNotitie" Content="Ga terug" Grid.Column="2" Grid.Row="2" Margin="5,0,0,0" Click="btAnnulerenNotitie_Click"/>
+                </Grid>
+                <DataGrid Visibility="Visible" Name="dgToDoNotitie" Margin="0,0,10,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" ItemsSource="{Binding}"/>
+                <Image Name="btTaakToevoegenNotitie" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Source="Images/add-1-icon--flatastic-1-iconset--custom-icon-design-0.png" MouseDown="btTaakToevoegenNotitie_MouseDown"/>
+                <Image Name="btTaakVerwijderenNotitie" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Source="Images/delete icon.png" MouseDown="btTaakVerwijderenNotitie_MouseDown" />
             </Grid>
             <!--GRID MUZIEK-->
             <Grid Name="gridMuziek"  Grid.Column="0" Grid.Row="2" Visibility="Hidden">

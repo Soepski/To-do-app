@@ -25,6 +25,8 @@ namespace ToDoApp
         Database db = new Database();
         Login login = new Login();
         ToDoController TDC = new ToDoController();
+        SchoolTakenController STC = new SchoolTakenController();
+        NotitieController NC = new NotitieController();
         DataTable userData;
 
         public MainWindow()
@@ -39,6 +41,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Hidden;
             gridNotities.Visibility = Visibility.Hidden;
             gridMuziek.Visibility = Visibility.Hidden;
+            Grid.SetRow(imgPointer, 2);
         }
 
         private void ImgSchool_MouseDown(object sender, MouseButtonEventArgs e)
@@ -47,6 +50,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Visible;
             gridNotities.Visibility = Visibility.Hidden;
             gridMuziek.Visibility = Visibility.Hidden;
+            Grid.SetRow(imgPointer, 4);
         }
 
         private void ImgNotitie_MouseDown(object sender, MouseButtonEventArgs e)
@@ -55,6 +59,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Hidden;
             gridNotities.Visibility = Visibility.Visible;
             gridMuziek.Visibility = Visibility.Hidden;
+            Grid.SetRow(imgPointer, 6);
         }
 
         private void ImgMuziek_MouseDown(object sender, MouseButtonEventArgs e)
@@ -63,6 +68,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Hidden;
             gridNotities.Visibility = Visibility.Hidden;
             gridMuziek.Visibility = Visibility.Visible;
+            Grid.SetRow(imgPointer, 8);
         }
 
         private void VbToDo_MouseDown(object sender, MouseButtonEventArgs e)
@@ -71,6 +77,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Hidden;
             gridNotities.Visibility = Visibility.Hidden;
             gridMuziek.Visibility = Visibility.Hidden;
+            Grid.SetRow(imgPointer, 2);
         }
 
         private void VbSchool_MouseDown(object sender, MouseButtonEventArgs e)
@@ -79,6 +86,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Visible;
             gridNotities.Visibility = Visibility.Hidden;
             gridMuziek.Visibility = Visibility.Hidden;
+            Grid.SetRow(imgPointer, 4);
         }
 
         private void VbNotities_MouseDown(object sender, MouseButtonEventArgs e)
@@ -87,6 +95,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Hidden;
             gridNotities.Visibility = Visibility.Visible;
             gridMuziek.Visibility = Visibility.Hidden;
+            Grid.SetRow(imgPointer, 6);
         }
 
         private void VbMuziek_MouseDown(object sender, MouseButtonEventArgs e)
@@ -95,6 +104,7 @@ namespace ToDoApp
             gridSchool.Visibility = Visibility.Hidden;
             gridNotities.Visibility = Visibility.Hidden;
             gridMuziek.Visibility = Visibility.Visible;
+            Grid.SetRow(imgPointer, 8);
         }
 
         private void ImgLogin_MouseDown(object sender, MouseButtonEventArgs e)
@@ -149,7 +159,11 @@ namespace ToDoApp
                 DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
                 dgToDo.DataContext = todoData.DefaultView;
 
-                
+                DataTable todoDataSchool = STC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoSchool.DataContext = todoDataSchool.DefaultView;
+
+                DataTable todoDataNotitie = NC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoNotitie.DataContext = todoDataNotitie.DefaultView;
             }
             else
             {
@@ -195,6 +209,7 @@ namespace ToDoApp
             gdTaakToevoegen.Visibility = Visibility.Hidden;
             dgToDo.Visibility = Visibility.Visible;
             btTaakVerwijderen.Visibility = Visibility.Visible;
+            btVoltooien.Visibility = Visibility.Visible;
         }
 
         private void btTaakToevoegen_MouseDown(object sender, MouseButtonEventArgs e)
@@ -202,6 +217,7 @@ namespace ToDoApp
             gdTaakToevoegen.Visibility = Visibility.Visible;
             dgToDo.Visibility = Visibility.Hidden;
             btTaakVerwijderen.Visibility = Visibility.Collapsed;
+            btVoltooien.Visibility = Visibility.Collapsed;
         }
 
         private void BtTaakVerwijderen_MouseDown(object sender, MouseButtonEventArgs e)
@@ -227,6 +243,220 @@ namespace ToDoApp
 
                 DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
                 dgToDo.DataContext = todoData.DefaultView;
+
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
+        }
+
+        private void btVoltooien_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+                DataRowView row = (DataRowView)dgToDo.SelectedItems[0];
+                string ID = row["ID"].ToString();
+
+                int affectedrows = TDC.taakVoltooien(ID);
+
+                if (affectedrows > 0)
+                {
+                    MessageBox.Show("Taak is voltooid");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak voltooien");
+                }
+
+                dgToDo.DataContext = null;
+
+                DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDo.DataContext = todoData.DefaultView;
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
+        }
+
+        private void btOpslaanSchool_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+
+                string userID = dr["ID"].ToString();
+
+                int rowsaffected = STC.taakOpslaan(tbTaakOmschrijvingSchool.Text, tbVak.Text, tbDatumSchool.Text, userID);
+
+                if (rowsaffected > 0)
+                {
+                    MessageBox.Show("Taak is toegevoegd");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak aanmaken");
+                }
+
+                dgToDoSchool.DataContext = null;
+
+                DataTable todoData = STC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoSchool.DataContext = todoData.DefaultView;
+
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
+        }
+
+        private void btTaakToevoegenSchool_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            gdTaakToevoegenSchool.Visibility = Visibility.Visible;
+            dgToDoSchool.Visibility = Visibility.Hidden;
+            btTaakVerwijderenSchool.Visibility = Visibility.Collapsed;
+            btVoltooienSchool.Visibility = Visibility.Collapsed;
+        }
+
+        private void btTaakVerwijderenSchool_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+                DataRowView row = (DataRowView)dgToDoSchool.SelectedItems[0];
+                string ID = row["ID"].ToString();
+
+                int affectedrows = STC.taakVerwijderen(ID);
+
+                if (affectedrows > 0)
+                {
+                    MessageBox.Show("Taak is verwijderd");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak verwijderen");
+                }
+
+                dgToDoSchool.DataContext = null;
+
+                DataTable todoData = STC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoSchool.DataContext = todoData.DefaultView;
+
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
+        }
+
+        private void btVoltooienSchool_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+                DataRowView row = (DataRowView)dgToDoSchool.SelectedItems[0];
+                string ID = row["ID"].ToString();
+
+                int affectedrows = STC.taakVoltooien(ID);
+
+                if (affectedrows > 0)
+                {
+                    MessageBox.Show("Taak is voltooid");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak voltooien");
+                }
+
+                dgToDoSchool.DataContext = null;
+
+                DataTable todoData = STC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoSchool.DataContext = todoData.DefaultView;
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
+        }
+
+        private void btAnnulerenSchool_Click(object sender, RoutedEventArgs e)
+        {
+            gdTaakToevoegenSchool.Visibility = Visibility.Hidden;
+            dgToDoSchool.Visibility = Visibility.Visible;
+            btTaakVerwijderenSchool.Visibility = Visibility.Visible;
+            btVoltooienSchool.Visibility = Visibility.Visible;
+        }
+
+        private void btOpslaanNotitie_Click(object sender, RoutedEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+
+                string userID = dr["ID"].ToString();
+
+                int rowsaffected = NC.taakOpslaan(tbTaakOmschrijvingNotitie.Text, userID);
+
+                if (rowsaffected > 0)
+                {
+                    MessageBox.Show("Notitie is toegevoegd");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de notitie aanmaken");
+                }
+
+                dgToDoNotitie.DataContext = null;
+
+                DataTable todoData = NC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoNotitie.DataContext = todoData.DefaultView;
+
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
+        }
+
+        private void btTaakToevoegenNotitie_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            gdTaakToevoegenNotitie.Visibility = Visibility.Visible;
+            dgToDoNotitie.Visibility = Visibility.Hidden;
+            btTaakVerwijderenNotitie.Visibility = Visibility.Collapsed;
+        }
+
+        private void btAnnulerenNotitie_Click(object sender, RoutedEventArgs e)
+        {
+            gdTaakToevoegenNotitie.Visibility = Visibility.Hidden;
+            dgToDoNotitie.Visibility = Visibility.Visible;
+            btTaakVerwijderenNotitie.Visibility = Visibility.Visible;
+        }
+
+        private void btTaakVerwijderenNotitie_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+                DataRowView row = (DataRowView)dgToDoNotitie.SelectedItems[0];
+                string ID = row["ID"].ToString();
+
+                int affectedrows = NC.taakVerwijderen(ID);
+
+                if (affectedrows > 0)
+                {
+                    MessageBox.Show("Taak is verwijderd");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak verwijderen");
+                }
+
+                dgToDoNotitie.DataContext = null;
+
+                DataTable todoData = NC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDoNotitie.DataContext = todoData.DefaultView;
 
             }
             else

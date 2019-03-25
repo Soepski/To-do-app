@@ -79,6 +79,8 @@
     </Compile>
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\Login.cs" />
+    <Compile Include="Classes\NotitieController.cs" />
+    <Compile Include="Classes\SchoolTakenController.cs" />
     <Compile Include="Classes\ToDoController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -138,6 +140,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\delete icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sign-check-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\pointer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

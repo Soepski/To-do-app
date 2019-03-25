@@ -35,5 +35,13 @@ namespace ToDoApp.Classes
 
             return affectedRows;
         }
+        public int taakVoltooien(string taakID)
+        {
+            int affectedRows;
+
+            affectedRows = db.ExecuteNonQuery($"UPDATE `tododb`.`to-do taak` SET `Voltooid`=b'1' WHERE  `ID`={taakID};");
+
+            return affectedRows;
+        }
     }
 }
