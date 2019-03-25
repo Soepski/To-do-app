@@ -27,6 +27,7 @@ namespace ToDoApp
         ToDoController TDC = new ToDoController();
         SchoolTakenController STC = new SchoolTakenController();
         NotitieController NC = new NotitieController();
+        List<TextBlock> menuItems = new List<TextBlock>();
         DataTable userData;
 
         public MainWindow()
@@ -464,5 +465,37 @@ namespace ToDoApp
                 MessageBox.Show("U bent niet ingelogd");
             }
         }
+
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            menuItems.Add(textUsername);
+            menuItems.Add(tbToDo);
+            menuItems.Add(tbSchool);
+            menuItems.Add(tbNotities);
+            menuItems.Add(tbMuziek);
+        }
+
+        private void cbDarkMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbDarkmode.IsChecked ==  false)
+            {
+                MainForm.Background = new SolidColorBrush(Color.FromRgb(255,255,255));
+                foreach (TextBlock item in menuItems)
+                {
+                    item.Foreground = new SolidColorBrush(Colors.Black);
+                }
+            }
+            else
+            {
+                MainForm.Background = new SolidColorBrush(Color.FromRgb(30,30,30));
+                foreach (TextBlock item in menuItems)
+                {
+                    item.Foreground = new SolidColorBrush(Colors.White);
+                }
+            }
+            
+        }
+
     }
 }

@@ -1,11 +1,11 @@
-﻿<Window x:Class="ToDoApp.MainWindow"
+﻿<Window x:Name="MainForm" x:Class="ToDoApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoApp"
         mc:Ignorable="d"
-        Title="To-Do List" Height="450" Width="800">
+        Title="To-Do List" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -46,7 +46,7 @@
                     <ColumnDefinition Width="90*"/>
                     <ColumnDefinition Width="65*"/>
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="2" Source="Images/default user pic.jpg" Stretch="UniformToFill" />
+                <Image Grid.Column="2" Source="Images/default user pic.png" Stretch="UniformToFill" />
                 <Viewbox Grid.Column="1" Grid.Row="2"  Margin="0,0,10,0">
                     <TextBlock Text="Gebruiksnaam:"/>
                 </Viewbox>
@@ -90,7 +90,7 @@
             </Grid.RowDefinitions>
             <Image Name="imgPointer" Grid.Row="2" Grid.Column="2" Source="Images/pointer.png"/>
             <!--USERNAME-->
-            <Image Name="imgLogin" Grid.Row="0" Grid.Column="0" Source="Images/default user pic.jpg" MouseDown="ImgLogin_MouseDown"/>
+            <Image Name="imgLogin" Grid.Row="0" Grid.Column="0" Source="Images/default user pic.png" MouseDown="ImgLogin_MouseDown"/>
             <Viewbox  Name="tbLogin" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5" HorizontalAlignment="Left" MouseDown="TbLogin_MouseDown">
                 <TextBlock  Name="textUsername" Text="Log in"/>
             </Viewbox>
@@ -110,9 +110,13 @@
                 <TextBlock  Name="tbNotities" Text="Notities"/>
             </Viewbox>
             <!--MUZIEK -->
-            <Image Name="imgMuziek" Grid.Row="8" Grid.Column="0" Source="Images/Muziek symbool.png" MouseDown="ImgMuziek_MouseDown"/>
+            <!--<Image Name="imgMuziek" Grid.Row="8" Grid.Column="0" Source="Images/Muziek symbool.png" MouseDown="ImgMuziek_MouseDown"/>
             <Viewbox Name="vbMuziek" Grid.Row="8" Grid.Column="1" Margin="5,5,5,5" HorizontalAlignment="Left" MouseDown="VbMuziek_MouseDown">
                 <TextBlock  Name="tbMuziek" Text="Muziek"/>
+            </Viewbox>-->
+            <Image Name="imgSetting" Grid.Row="8" Grid.Column="0" Source="Images/Settings-icon.png" MouseDown="ImgMuziek_MouseDown"/>
+            <Viewbox Name="vbMuziek" Grid.Row="8" Grid.Column="1" Margin="5,5,5,5" HorizontalAlignment="Left" MouseDown="VbMuziek_MouseDown">
+                <TextBlock  Name="tbMuziek" Text="Settings"/>
             </Viewbox>
         </Grid>
         <!-- INOUD -->
@@ -125,7 +129,7 @@
             <!-- IMAGE HEADER-->
             <Image Grid.Column="0" Grid.Row="0" Source="Images/4169796-color-gradient-wallpaper.jpg" Stretch="UniformToFill"/>
             <!--GRID TO DO-->
-            <Grid Name="gridToDo"  Grid.Column="0" Grid.Row="2" Visibility="Visible">
+            <Grid Name="gridToDo"  Grid.Column="0" Grid.Row="2" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25*"/>
                     <RowDefinition Height="25*"/>
@@ -259,8 +263,8 @@
                 <Image Name="btTaakVerwijderenNotitie" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Source="Images/delete icon.png" MouseDown="btTaakVerwijderenNotitie_MouseDown" />
             </Grid>
             <!--GRID MUZIEK-->
-            <Grid Name="gridMuziek"  Grid.Column="0" Grid.Row="2" Visibility="Hidden">
-                <TextBlock Name="MUZIEK" Text="MUZIEK"/>
+            <Grid Name="gridMuziek"  Grid.Column="0" Grid.Row="2" Visibility="Visible">
+                <CheckBox Name="cbDarkmode" Content="Dark mode" Click="cbDarkMode_Click"/>
             </Grid>
         </Grid>
     </Grid>

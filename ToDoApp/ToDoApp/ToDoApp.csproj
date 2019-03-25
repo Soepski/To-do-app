@@ -147,5 +147,11 @@
   <ItemGroup>
     <Resource Include="Images\pointer.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Settings-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\default user pic.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
