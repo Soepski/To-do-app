@@ -165,12 +165,22 @@ namespace ToDoApp
 
                 string userID = dr["ID"].ToString();
 
-                db.ExecuteStringQuery($"INSERT INTO `tododb`.`to-do taak` (`Omschrijving`, `Datum`, `GebruikerID`, `Voltooid`) VALUES ('{tbTaakOmschrijving.Text}', '{tbDatum.Text}', '{userID}', b'0');");
+                int rowsaffected = TDC.taakOpslaan(tbTaakOmschrijving.Text, tbDatum.Text, userID);
 
-                dgToDo.Items.Clear();
+                if (rowsaffected > 0)
+                {
+                    MessageBox.Show("Taak is toegevoegd");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak aanmaken");
+                }
+
+                dgToDo.DataContext = null;
 
                 DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
                 dgToDo.DataContext = todoData.DefaultView;
+                
             }
             else
             {
@@ -184,13 +194,45 @@ namespace ToDoApp
         {
             gdTaakToevoegen.Visibility = Visibility.Hidden;
             dgToDo.Visibility = Visibility.Visible;
-
+            btTaakVerwijderen.Visibility = Visibility.Visible;
         }
 
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        private void btTaakToevoegen_MouseDown(object sender, MouseButtonEventArgs e)
         {
             gdTaakToevoegen.Visibility = Visibility.Visible;
             dgToDo.Visibility = Visibility.Hidden;
+            btTaakVerwijderen.Visibility = Visibility.Collapsed;
+        }
+
+        private void BtTaakVerwijderen_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (userData != null)
+            {
+                DataRow dr = userData.Rows[0];
+                DataRowView row = (DataRowView)dgToDo.SelectedItems[0];
+                string ID = row["ID"].ToString();
+
+                int affectedrows = TDC.taakVerwijderen(ID);
+
+                if (affectedrows > 0)
+                {
+                    MessageBox.Show("Taak is verwijderd");
+                }
+                else
+                {
+                    MessageBox.Show("Er is iets mis gegaan met de taak verwijderen");
+                }
+
+                dgToDo.DataContext = null;
+
+                DataTable todoData = TDC.laadData(Int32.Parse(dr["ID"].ToString()));
+                dgToDo.DataContext = todoData.DefaultView;
+
+            }
+            else
+            {
+                MessageBox.Show("U bent niet ingelogd");
+            }
         }
     }
 }

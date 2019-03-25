@@ -20,7 +20,7 @@ namespace ToDoApp.Classes
 
         public void Connect()
         {
-            this.Con = new MySqlConnection("Server=81.207.39.183;Database=tododb;Uid=root;Pwd=Liebregts10_;");
+            this.Con = new MySqlConnection("Server=81.207.39.183;Database=tododb;Uid=username;Pwd=wachtwoord;");
             this.Con.Open();
         }
 

@@ -15,7 +15,7 @@ namespace ToDoApp.Classes
         {
             db.Connect();
 
-            DataTable dt = db.ExecuteStringQuery($"SELECT * FROM gebruiker WHERE gebruikersnaam = '{username}' AND wachtwoord = '{password}';");
+            DataTable dt = db.ExecuteQuery($"SELECT * FROM gebruiker WHERE gebruikersnaam = '{username}' AND wachtwoord = '{password}';");
 
             db.Disconnect();
 

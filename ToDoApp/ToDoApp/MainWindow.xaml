@@ -164,8 +164,8 @@
                     <Button Name="btAnnuleren" Content="Annuleer" Grid.Column="2" Grid.Row="4" Margin="5,0,0,0" Click="BtAnnuleren_Click"/>
                 </Grid>
                 <DataGrid Visibility="Visible" Name="dgToDo" Margin="0,0,10,0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" ItemsSource="{Binding}"/>
-                <Image Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Source="Images/add-1-icon--flatastic-1-iconset--custom-icon-design-0.png" MouseDown="Image_MouseDown"/>
-                <Image Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Source="Images/delete icon.png"/>
+                <Image Name="btTaakToevoegen" Grid.Column="0" Grid.Row="0" Margin="5,5,5,5" Source="Images/add-1-icon--flatastic-1-iconset--custom-icon-design-0.png" MouseDown="btTaakToevoegen_MouseDown"/>
+                <Image Name="btTaakVerwijderen" Grid.Column="0" Grid.Row="1" Margin="5,5,5,5" Source="Images/delete icon.png" MouseDown="BtTaakVerwijderen_MouseDown"/>
             </Grid>
             <!--GRID SCHOOL-->
             <Grid Name="gridSchool"  Grid.Column="0" Grid.Row="2" Visibility="Hidden">
